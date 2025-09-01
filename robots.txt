@@ -1,0 +1,8 @@
+User-agent: *
+Disallow:style.min.css
+Allow:  index.min.html 
+Allow: sobre.html 
+Allow: privacidade.html
+Allow: contato.html
+Allow: tutorial.html
+Sitemap: https://arthur375c.github.io/Ultimate-Text-Editor/sitemap.xml
