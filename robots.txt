@@ -1,5 +1,5 @@
 User-agent: *
-Disallow:style.min.css
+Disallow: /style.min.css
 Allow:  index.min.html 
 Allow: sobre.html 
 Allow: privacidade.html
