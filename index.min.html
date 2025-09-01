@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Text Editor</title>
+<link rel="stylesheet" href="style.min.css">
+<meta name="title" content="Ultimate Text Editor - Edite seu texto como um mini Word!">
+<meta name="description" content="Ultimate Text Editor é um editor de texto online que permite criar documentos, formatar texto, inserir links e imagens, e salvar seus arquivos diretamente no navegador.">
+<meta name="keywords" content="editor de texto, online, gratuito, formatação, salvar, HTML, TXT, links, imagens">
+<meta name="author" content="Arthur">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ultimate Text Editor - Edite seu texto como um mini Word!">
+<meta property="og:description" content="Ultimate Text Editor é um editor de texto online que permite criar documentos, formatar texto, inserir links e imagens, e salvar seus arquivos diretamente no navegador.">
+<meta property="og:type" content="website">">
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.min.html">Home</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="tutorial.html">Tutorial</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Política de Privacidade</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Ultimate Text Editor</h1>
+  <p>Edite seu texto como um mini Word diretamente no navegador!</p>
+
+  <!-- Aqui vai o editor que criamos -->
+  <div id="editor">
+    <!-- Toolbar -->
+    <div id="editor-toolbar">
+      <button onclick="exec('bold')"><b>B</b></button>
+      <button onclick="exec('italic')"><i>I</i></button>
+      <button onclick="exec('underline')"><u>U</u></button>
+      <button onclick="exec('strikeThrough')"><s>S</s></button>
+      <button onclick="exec('justifyLeft')">⬅️</button>
+      <button onclick="exec('justifyCenter')">↔️</button>
+      <button onclick="exec('justifyRight')">➡️</button>
+      <button onclick="exec('justifyFull')">≡</button>
+      <select onchange="exec('fontName', this.value)">
+        <option value="Arial">Arial</option>
+        <option value="Courier New">Courier New</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Tahoma">Tahoma</option>
+        <option value="Verdana">Verdana</option>
+      </select>
+      <select onchange="exec('fontSize', this.value)">
+        <option value="1">10px</option>
+        <option value="2">12px</option>
+        <option value="3" selected>16px</option>
+        <option value="4">18px</option>
+        <option value="5">24px</option>
+        <option value="6">32px</option>
+        <option value="7">48px</option>
+      </select>
+      <input type="color" onchange="exec('foreColor', this.value)" title="Text Color">
+      <input type="color" onchange="exec('hiliteColor', this.value)" title="Background Color">
+      <button onclick="insertLink()">Link</button>
+      <button onclick="insertImage()">Image</button>
+      <button onclick="saveTxt()">Save TXT</button>
+      <button onclick="saveHtml()">Save HTML</button>
+    </div>
+
+    <div id="editor-textarea" contenteditable="true" data-placeholder="Start typing..."></div>
+
+    <h3>Preview:</h3>
+    <div id="preview"></div>
+  </div>
+</main>
+
+<script defer>
+const editor = document.getElementById('editor-textarea');
+const preview = document.getElementById('preview');
+function exec(command, value=null){document.execCommand(command,false,value);editor.focus();}
+function insertLink(){const url=prompt("Enter URL:");if(url) exec('createLink',url);}
+function insertImage(){const url=prompt("Enter Image URL:");if(url) exec('insertImage',url);}
+function saveTxt(){const text=editor.innerText;const blob=new Blob([text],{type:'text/plain'});const link=document.createElement('a');link.download='document.txt';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
+function saveHtml(){const html=editor.innerHTML;const blob=new Blob([html],{type:'text/html'});const link=document.createElement('a');link.download='document.html';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
+editor.addEventListener('input',()=>{preview.innerHTML=editor.innerHTML;if(editor.innerHTML=="<br>") editor.innerHTML="";});
+</script>
+
+</body>
+</html>
