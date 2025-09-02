@@ -3,88 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultimate Text Editor</title>
-<link rel="stylesheet" href="style.min.css">
-<meta name="title" content="Ultimate Text Editor - Edite seu texto como um mini Word!">
-<meta name="description" content="Ultimate Text Editor é um editor de texto online que permite criar documentos, formatar texto, inserir links e imagens, e salvar seus arquivos diretamente no navegador.">
-<meta name="keywords" content="editor de texto, online, gratuito, formatação, salvar, HTML, TXT, links, imagens">
-<meta name="author" content="Arthur">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Ultimate Text Editor - Edite seu texto como um mini Word!">
-<meta property="og:description" content="Ultimate Text Editor é um editor de texto online que permite criar documentos, formatar texto, inserir links e imagens, e salvar seus arquivos diretamente no navegador.">
-<meta property="og:type" content="website">
-<meta name="google-site-verification" content="yxrivZCZmTKV3hQ58KZTT64DvyV6669hFIlvM-P2DaI" />
+<title>Ultimate Text Editor PRO Ultra MAX</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<meta name="description" content="Ultimate Text Editor PRO Ultra MAX - Editor de texto online avançado com tabelas, emojis, PDF, HTML, TXT, tema escuro, undo/redo, templates e muito mais!">
+<style>
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f0f0f0; color:#000; transition: background 0.3s, color 0.3s;}
+header nav { display:flex; flex-wrap:wrap; gap:10px; padding:10px; background:#333; align-items:center;}
+header nav a, header nav button { color:white; text-decoration:none; background:none; border:none; cursor:pointer; padding:5px 10px; transition: background 0.2s; }
+header nav a:hover, header nav button:hover { background:#555; border-radius:5px; }
+main { padding:20px; max-width:1200px; margin:auto; }
+#editor { margin-top:20px; }
+#editor-toolbar { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; background:#e0e0e0; padding:5px; border-radius:5px; }
+#editor-toolbar select, #editor-toolbar input, #editor-toolbar button { padding:5px; border-radius:5px; border:1px solid #ccc; cursor:pointer; }
+#editor-textarea { border:1px solid #ccc; min-height:300px; padding:10px; background:white; overflow:auto; border-radius:5px;}
+#preview { border:1px solid #ccc; min-height:150px; padding:10px; margin-top:10px; background:#f9f9f9; border-radius:5px;}
+#wordCount { margin-top:5px; font-size:14px; }
+.dark-theme { background:#1e1e1e; color:white; }
+.dark-theme #editor-textarea, .dark-theme #preview, .dark-theme #editor-toolbar { background:#2c2c2c; color:white; border-color:#555; }
+.emoji-picker { display:flex; flex-wrap:wrap; gap:5px; max-height:150px; overflow:auto; border:1px solid #ccc; padding:5px; border-radius:5px; margin-top:5px; background:white; }
+.dark-theme .emoji-picker { background:#2c2c2c; border-color:#555; }
+.emoji-picker span { cursor:pointer; font-size:20px; transition: transform 0.2s; }
+.emoji-picker span:hover { transform: scale(1.2); }
+button.template-btn { background:#4CAF50; color:white; font-weight:bold; }
+@media(max-width:600px){#editor-toolbar{flex-wrap:wrap;}#editor-textarea{min-height:200px;}}
+</style>
 </head>
 <body>
 
 <header>
-  <nav>
-    <a href="index.min.html">Home</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="tutorial.html">Tutorial</a>
-    <a href="contato.html">Contato</a>
-    <a href="privacidade.html">Política de Privacidade</a>
-  </nav>
+<nav>
+  <a href="index.min.html">Home</a>
+  <a href="sobre.html">Sobre</a>
+  <a href="contato.html">Contato</a>
+  <a href="privacidade.html">Política</a>
+  <a href="artigos/inicio.html">Artigos</a>
+  <button onclick="toggleTheme()"><i class="fa-solid fa-adjust"></i> Tema</button>
+</nav>
 </header>
 
 <main>
-  <h1>Ultimate Text Editor</h1>
-  <p>Edite seu texto como um mini Word diretamente no navegador!</p>
+<h1>Ultimate Text Editor PRO Ultra MAX</h1>
+<p>Editor de texto online avançado, totalmente responsivo e com design profissional!</p>
 
-  <!-- Aqui vai o editor que criamos -->
-  <div id="editor">
-    <!-- Toolbar -->
-    <div id="editor-toolbar">
-      <button onclick="exec('bold')"><b>B</b></button>
-      <button onclick="exec('italic')"><i>I</i></button>
-      <button onclick="exec('underline')"><u>U</u></button>
-      <button onclick="exec('strikeThrough')"><s>S</s></button>
-      <button onclick="exec('justifyLeft')">⬅️</button>
-      <button onclick="exec('justifyCenter')">↔️</button>
-      <button onclick="exec('justifyRight')">➡️</button>
-      <button onclick="exec('justifyFull')">≡</button>
-      <select onchange="exec('fontName', this.value)">
-        <option value="Arial">Arial</option>
-        <option value="Courier New">Courier New</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Tahoma">Tahoma</option>
-        <option value="Verdana">Verdana</option>
-      </select>
-      <select onchange="exec('fontSize', this.value)">
-        <option value="1">10px</option>
-        <option value="2">12px</option>
-        <option value="3" selected>16px</option>
-        <option value="4">18px</option>
-        <option value="5">24px</option>
-        <option value="6">32px</option>
-        <option value="7">48px</option>
-      </select>
-      <input type="color" onchange="exec('foreColor', this.value)" title="Text Color">
-      <input type="color" onchange="exec('hiliteColor', this.value)" title="Background Color">
-      <button onclick="insertLink()">Link</button>
-      <button onclick="insertImage()">Image</button>
-      <button onclick="saveTxt()">Save TXT</button>
-      <button onclick="saveHtml()">Save HTML</button>
-    </div>
-
-    <div id="editor-textarea" contenteditable="true" data-placeholder="Start typing..."></div>
-
-    <h3>Preview:</h3>
-    <div id="preview"></div>
+<div id="editor">
+  <div id="editor-toolbar">
+    <button onclick="exec('bold')" title="Negrito (Ctrl+B)"><i class="fa-solid fa-bold"></i></button>
+    <button onclick="exec('italic')" title="Itálico (Ctrl+I)"><i class="fa-solid fa-italic"></i></button>
+    <button onclick="exec('underline')" title="Sublinhado (Ctrl+U)"><i class="fa-solid fa-underline"></i></button>
+    <button onclick="exec('strikeThrough')" title="Tachado (Ctrl+Shift+X)"><i class="fa-solid fa-strikethrough"></i></button>
+    <button onclick="exec('justifyLeft')"><i class="fa-solid fa-align-left"></i></button>
+    <button onclick="exec('justifyCenter')"><i class="fa-solid fa-align-center"></i></button>
+    <button onclick="exec('justifyRight')"><i class="fa-solid fa-align-right"></i></button>
+    <button onclick="exec('justifyFull')"><i class="fa-solid fa-align-justify"></i></button>
+    <select onchange="exec('fontName', this.value)">
+      <option value="Arial">Arial</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Verdana">Verdana</option>
+    </select>
+    <select onchange="exec('fontSize', this.value)">
+      <option value="1">10px</option>
+      <option value="2">12px</option>
+      <option value="3" selected>16px</option>
+      <option value="4">18px</option>
+      <option value="5">24px</option>
+      <option value="6">32px</option>
+      <option value="7">48px</option>
+    </select>
+    <input type="color" onchange="exec('foreColor', this.value)" title="Cor do texto">
+    <input type="color" onchange="exec('hiliteColor', this.value)" title="Cor de fundo">
+    <button onclick="insertLink()" title="Inserir Link"><i class="fa-solid fa-link"></i></button>
+    <button onclick="insertImage()" title="Inserir Imagem"><i class="fa-solid fa-image"></i></button>
+    <button onclick="insertTable()" title="Inserir Tabela"><i class="fa-solid fa-table"></i></button>
+    <button onclick="toggleEmojiPicker()" title="Inserir Emoji"><i class="fa-solid fa-face-smile"></i></button>
+    <button onclick="saveTxt()" title="Salvar TXT"><i class="fa-solid fa-file-lines"></i></button>
+    <button onclick="saveHtml()" title="Salvar HTML"><i class="fa-solid fa-code"></i></button>
+    <button onclick="savePDF()" title="Salvar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+    <button onclick="undo()" title="Desfazer (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i></button>
+    <button onclick="redo()" title="Refazer (Ctrl+Y)"><i class="fa-solid fa-rotate-right"></i></button>
   </div>
+
+  <div class="emoji-picker" id="emojiPicker" style="display:none;"></div>
+
+  <div style="margin-top:10px;">
+    <button class="template-btn" onclick="loadTemplate('list')">Template: Lista</button>
+    <button class="template-btn" onclick="loadTemplate('letter')">Template: Carta</button>
+    <button class="template-btn" onclick="loadTemplate('note')">Template: Nota</button>
+  </div>
+
+  <div id="editor-textarea" contenteditable="true" data-placeholder="Comece a digitar..."></div>
+
+  <h3>Preview:</h3>
+  <div id="preview"></div>
+  <div id="wordCount">Words: 0, Characters: 0, Lines: 0</div>
+</div>
+
 </main>
 
-<script defer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
 const editor = document.getElementById('editor-textarea');
 const preview = document.getElementById('preview');
-function exec(command, value=null){document.execCommand(command,false,value);editor.focus();}
+const emojiPicker = document.getElementById('emojiPicker');
+let undoStack=[], redoStack=[];
+
+// Comandos
+function exec(command,value=null){document.execCommand(command,false,value);editor.focus();}
 function insertLink(){const url=prompt("Enter URL:");if(url) exec('createLink',url);}
 function insertImage(){const url=prompt("Enter Image URL:");if(url) exec('insertImage',url);}
-function saveTxt(){const text=editor.innerText;const blob=new Blob([text],{type:'text/plain'});const link=document.createElement('a');link.download='document.txt';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
-function saveHtml(){const html=editor.innerHTML;const blob=new Blob([html],{type:'text/html'});const link=document.createElement('a');link.download='document.html';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
-editor.addEventListener('input',()=>{preview.innerHTML=editor.innerHTML;if(editor.innerHTML=="<br>") editor.innerHTML="";});
+function insertTable(){const rows = prompt("Número de linhas:")||2; const cols = prompt("Número de colunas:")||2; let table = '<table border="1" style="border-collapse:collapse;">'; for(let r=0;r<rows;r++){table+='<tr>';for(let c=0;c<cols;c++){table+='<td>Cell</td>';}table+='</tr>';} table+='</table>'; exec('insertHTML', table);}
+
+// Emojis
+const emojis = ["😀","😎","😂","😍","👍","🎉","💡","🔥","🚀","📝"];
+function toggleEmojiPicker(){
+  if(emojiPicker.style.display==="none"){
+    emojiPicker.style.display="flex"; emojiPicker.innerHTML="";
+    emojis.forEach(e=>{const span=document.createElement('span'); span.textContent=e; span.onclick=()=>{exec('insertText',e);emojiPicker.style.display='none';}; emojiPicker.appendChild(span);});
+  } else {emojiPicker.style.display="none";}
+}
+
+// Templates
+function loadTemplate(type){if(type==='list') editor.innerHTML="<ul><li>Item 1</li><li>Item 2</li></ul>";if(type==='letter') editor.innerHTML="<p>Dear Friend,</p><p>Escreva sua carta aqui...</p><p>Regards,</p>";if(type==='note') editor.innerHTML="<h3>Nota:</h3><p>Escreva sua nota aqui...</p>"; updatePreview();}
+
+// Salvamento
+function saveTxt(){const blob=new Blob([editor.innerText],{type:'text/plain'});const link=document.createElement('a');link.download='document.txt';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
+function saveHtml(){const blob=new Blob([editor.innerHTML],{type:'text/html'});const link=document.createElement('a');link.download='document.html';link.href=URL.createObjectURL(blob);link.click();URL.revokeObjectURL(link.href);}
+function savePDF(){const { jsPDF } = window.jspdf; const doc=new jsPDF(); doc.html(editor,{callback:pdf=>pdf.save("document.pdf"), x:10, y:10});}
+
+// Tema
+function toggleTheme(){document.body.classList.toggle('dark-theme');}
+
+// Undo/Redo
+function undo(){if(undoStack.length){redoStack.push(editor.innerHTML);editor.innerHTML=undoStack.pop(); updatePreview();}}
+function redo(){if(redoStack.length){undoStack.push(editor.innerHTML);editor.innerHTML=redoStack.pop(); updatePreview();}}
+
+// Atualizar preview e contadores
+function updatePreview(){
+  preview.innerHTML=editor.innerHTML;
+  const text=editor.innerText.trim();
+  const words=text?text.split(/\s+/).length:0;
+  const chars=text.length;
+  const lines=text.split(/\n/).length;
+  document.getElementById('wordCount').innerText=`Words: ${words}, Characters: ${chars}, Lines: ${lines}`;
+}
+
+// Eventos
+editor.addEventListener('input',()=>{
+  undoStack.push(editor.innerHTML);
+  localStorage.setItem('savedText',editor.innerHTML);
+  updatePreview();
+});
+
+window.onload=()=>{
+  if(localStorage.getItem('savedText')) editor.innerHTML=localStorage.getItem('savedText');
+  updatePreview();
+};
+
+// Atalhos avançados
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey&&e.key==='b'){exec('bold'); e.preventDefault();}
+  if(e.ctrlKey&&e.key==='i'){exec('italic'); e.preventDefault();}
+  if(e.ctrlKey&&e.key==='u'){exec('underline'); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='x'){exec('strikeThrough'); e.preventDefault();}
+  if(e.ctrlKey&&e.key==='z'){undo(); e.preventDefault();}
+  if(e.ctrlKey&&e.key==='y'){redo(); e.preventDefault();}
+  if(e.ctrlKey&&e.key==='s'){saveTxt(); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='h'){saveHtml(); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='p'){savePDF(); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='l'){loadTemplate('list'); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='n'){loadTemplate('note'); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='m'){loadTemplate('letter'); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='d'){toggleTheme(); e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='e'){toggleEmojiPicker(); e.preventDefault();}
+});
 </script>
 
 </body>
 </html>
-
